@@ -35,14 +35,26 @@ public class Document {
     }
 
     public void insertChar(char c) {
-        if (c == 8) {
-            removeChar(c);
-        } else if (c == 49) {
-            moveLeft();
-        } else if (c == 50) {
-            moveRight();
-        } else
-            iChar(c);
+        int ic = 1;
+        switch (ic) {
+            case 1:
+                if (c == 8) {
+                    removeChar(c);
+                    break;
+                }
+            case 2:
+                if (c == 49) {
+                    moveLeft();
+                    break;
+                }
+            case 3:
+                if (c == 50) {
+                    moveRight();
+                    break;
+                }
+            case 4:
+                iChar(c);
+        }
     }
 
 
@@ -122,26 +134,27 @@ public class Document {
         int mr = 1;
         switch (mr) {
             case 1:
-            if (cursorCol == CharacterDisplay.WIDTH - 1 && cursorRow == CharacterDisplay.HEIGHT - 1) {
-                break;
-            }
+                if (cursorCol == CharacterDisplay.WIDTH - 1 && cursorRow == CharacterDisplay.HEIGHT - 1) {
+                    break;
+                }
             case 2:
+                if (cursorCol == CharacterDisplay.WIDTH - 1) {
+                    cursorRow++;
+                    cursorCol = 0;
+                    display.displayCursor(' ', cursorRow, cursorCol);
+                    break;
+                }
+            case 3:
                 if (cursorCol <= CHLC.getLast()) {
                     CHLC.add(' ');
                     cursorCol++;
                     display.displayCursor(' ', cursorRow, cursorCol);
                     break;
-            }
-            case 3:
-                if (cursorCol == CharacterDisplay.WIDTH - 1) {
-                    cursorRow++;
-                    cursorCol = 0;
-                    display.displayCursor(' ', cursorRow, cursorCol);
-            } case 4:
+                }
+            case 4:
                 cursorCol++;
                 display.displayCursor(' ', cursorRow, cursorCol);
         }
     }
 }
-
 
