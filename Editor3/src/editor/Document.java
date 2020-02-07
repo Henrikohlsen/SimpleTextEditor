@@ -35,18 +35,27 @@ public class Document {
     }
 
     public void insertChar(char c) {
-        if (c == 8) {
-            removeChar(c);
-        } else if (c == 10) {
-            lineFeed(c);
-            display.displayCursor(c, cursorRow, cursorCol);
-        } else if (c == 49) {
-            moveLeft();
-        } else if (c == 50) {
-            moveRight();
+   int ic = 1;
+        switch (ic) {
+            case 1:
+                if (c == 8) {
+                    removeChar(c);
+                    break;
+                }
+            case 2:
+                if (c == 49) {
+                    moveLeft();
+                    break;
+                }
+            case 3:
+                if (c == 50) {
+                    moveRight();
+                    break;
+                }
+            case 4:
+                iChar(c);
+
         }
-        else
-            iChar(c);
     }
 
 
@@ -55,7 +64,7 @@ public class Document {
 
         switch (i) {
             case 1:
-                if (cursorCol == CharacterDisplay.WIDTH && cursorRow == CharacterDisplay.HEIGHT-1) {
+                if (cursorCol == CharacterDisplay.WIDTH && cursorRow == CharacterDisplay.HEIGHT - 1) {
                     break;
                 }
             case 2:
@@ -71,7 +80,7 @@ public class Document {
         }
     }
 
-    private void removeChar (char c){
+    private void removeChar(char c) {
         int r = 1;
         switch (r) {
             case 1:
@@ -84,7 +93,7 @@ public class Document {
             case 2:
                 if (cursorCol == 0) {
                     cursorRow--;
-                    cursorCol = CharacterDisplay.WIDTH -1;
+                    cursorCol = CharacterDisplay.WIDTH - 1;
                     c = 0;
                     displayC(c);
                     break;
@@ -98,10 +107,11 @@ public class Document {
 
     }
 
-    private void displayC (char c) {
+    private void displayC(char c) {
         display.displayChar(c, cursorRow, cursorCol);
         display.displayCursor(c, cursorRow, cursorCol);
     }
+
 
     public void lineFeed(char c) {
         CHLC.add(cursorCol, c);
@@ -117,39 +127,52 @@ public class Document {
         }
         display.displayCursor(' ', cursorRow, cursorCol);
     }
-    private void moveLeft () {
-        if (cursorCol == 0 && cursorRow == 0) {
-        }
-        else if (cursorCol == 0) {
-            cursorRow--;
-            cursorCol = CharacterDisplay.WIDTH -1;
-            display.displayCursor(' ', cursorRow, cursorCol);
-        } else {
-            cursorCol--;
-            display.displayCursor(' ', cursorRow, cursorCol);
+  
+    private void moveLeft() {
+        int ml = 1;
+        switch (ml) {
+            case 1:
+                if (cursorCol == 0 && cursorRow == 0) {
+                    break;
+                }
+            case 2:
+                if (cursorCol == 0) {
+                    cursorRow--;
+                    cursorCol = CharacterDisplay.WIDTH - 1;
+                    display.displayCursor(' ', cursorRow, cursorCol);
+                }
+            case 3:
+                cursorCol--;
+                display.displayCursor(' ', cursorRow, cursorCol);
+
         }
     }
 
-    private void moveRight () {
-        if (cursorCol == CharacterDisplay.WIDTH -1 && cursorRow == CharacterDisplay.HEIGHT -1) {
-        }
-        else if(cursorCol == CharacterDisplay.WIDTH -1) {
-            System.out.println(":(");
-            cursorRow++;
-            cursorCol = 0;
-            display.displayCursor(' ', cursorRow, cursorCol);
-        } else if (cursorCol <= CHLC.getLast()) {
-            CHLC.add(' ');
-            cursorCol++;
-            System.out.println(":)");
-            display.displayCursor(' ', cursorRow, cursorCol);
-        }
-        else {
-            cursorCol++;
-            System.out.println("^^,");
-            display.displayCursor(' ', cursorRow, cursorCol);
+    private void moveRight() {
+        int mr = 1;
+        switch (mr) {
+            case 1:
+                if (cursorCol == CharacterDisplay.WIDTH - 1 && cursorRow == CharacterDisplay.HEIGHT - 1) {
+                    break;
+                }
+            case 2:
+                if (cursorCol == CharacterDisplay.WIDTH - 1) {
+                    cursorRow++;
+                    cursorCol = 0;
+                    display.displayCursor(' ', cursorRow, cursorCol);
+                    break;
+                }
+            case 3:
+                if (cursorCol <= CHLC.getLast()) {
+                    CHLC.add(' ');
+                    cursorCol++;
+                    display.displayCursor(' ', cursorRow, cursorCol);
+                    break;
+                }
+            case 4:
+                cursorCol++;
+                display.displayCursor(' ', cursorRow, cursorCol);
         }
     }
 }
-
 
