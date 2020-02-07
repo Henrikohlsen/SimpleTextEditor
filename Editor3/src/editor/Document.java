@@ -7,6 +7,8 @@ package editor;
 
 import editor.display.CharacterDisplay;
 
+
+import javax.swing.*;
 import java.util.LinkedList;
 
 /**
@@ -45,6 +47,7 @@ public class Document {
         } else
             iChar(c);
     }
+
 
     private void iChar(char c) {
         int i = 1;
@@ -105,6 +108,35 @@ public class Document {
         private void overWrite (char c) {
             display.displayChar(c, cursorRow, cursorCol);
             display.displayCursor(c, cursorRow, cursorCol);
+        }
+
+        private void moveLeft () {
+            if (cursorCol == 0 && cursorRow == 0) {
+            }
+            else if (cursorCol == 0) {
+                cursorRow--;
+                cursorCol = CharacterDisplay.WIDTH;
+            } else {
+                cursorCol--;
+                display.displayCursor(' ', cursorRow, cursorCol);
+            }
+        }
+
+        private void moveRight () {
+        if (cursorCol <= CHLC.getLast()) {
+            CHLC.add(' ');
+            cursorCol++;
+            System.out.println(":)");
+            display.displayCursor(' ', cursorRow, cursorCol);
+        } else if (cursorCol == CharacterDisplay.WIDTH -1) {
+            System.out.println(":(");
+                cursorCol = 0;
+            }
+            else {
+                cursorCol++;
+            System.out.println("^^,");
+                display.displayCursor(' ', cursorRow, cursorCol);
+            }
         }
     }
 
