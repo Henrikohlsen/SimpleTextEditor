@@ -6,7 +6,6 @@
 package editor;
 
 import editor.display.CharacterDisplay;
-import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 
@@ -34,8 +33,13 @@ public class Document {
     }
 
     public void insertChar(char c) {
-        if (c == 8) {
+        if (c == 10) {
+            lineFeed(c);
+            displayC(c);
+        }
+        else if (c == 8) {
             removeChar(c);
+            displayC(' ');
         } else {
             iChar(c);
         }
@@ -52,8 +56,8 @@ public class Document {
             case 2:
                 if (cursorCol >= CharacterDisplay.WIDTH) {
                     cursorCol = 0;
-                    cursorRow++;
                     displayC(c);
+                    cursorRow++;
                 }
             case 3:
                 CHLC.add(cursorCol, c);
@@ -72,7 +76,6 @@ public class Document {
                     if (cursorCol == 0 && cursorRow == 0) {
                         c = 0;
                         System.out.println("Nothing to remove");
-                        displayC(c);
                         break;
                     }
                 case 2:
@@ -80,19 +83,28 @@ public class Document {
                         cursorRow--;
                         cursorCol = CharacterDisplay.WIDTH -1;
                         c = 0;
-                        displayC(c);
                         break;
                     }
-
                 case 3:
                         CHLC.removeLast();
                         c = ' ';
                         cursorCol--;
-                        displayC(c);
         }
-
     }
 
+    private void lineFeed(char c) {
+        CHLC.add(cursorCol, c);
+        CHLR.add(cursorRow, c);
+        display.displayChar(c, cursorRow, cursorCol);
+        if (cursorRow < CharacterDisplay.HEIGHT-1) {
+            int ant = CharacterDisplay.WIDTH - cursorCol;
+            for (int i = 0; i < ant; i++) {
+                CHLC.add('c');
+            }
+            cursorCol = 0;
+            cursorRow++;
+        }
+    }
         private void displayC (char c) {
             display.displayChar(c, cursorRow, cursorCol);
             display.displayCursor(c, cursorRow, cursorCol);
