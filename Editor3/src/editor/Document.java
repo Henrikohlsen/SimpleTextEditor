@@ -37,6 +37,9 @@ public class Document {
     public void insertChar(char c) {
         if (c == 8) {
             removeChar(c);
+        } else if (c == 10) {
+            lineFeed(c);
+            display.displayCursor(c, cursorRow, cursorCol);
         } else if (c == 49) {
             moveLeft();
         } else if (c == 50) {
@@ -100,6 +103,20 @@ public class Document {
         display.displayCursor(c, cursorRow, cursorCol);
     }
 
+    public void lineFeed(char c) {
+        CHLC.add(cursorCol, c);
+        CHLR.add(cursorRow, c);
+        display.displayChar(c, cursorRow, cursorCol);
+        if (cursorRow < CharacterDisplay.HEIGHT-1) {
+            int ant = CharacterDisplay.WIDTH - cursorCol;
+            for (int i = 0; i < ant; i++) {
+                CHLC.add('c');
+            }
+            cursorCol = 0;
+            cursorRow++;
+        }
+        display.displayCursor(' ', cursorRow, cursorCol);
+    }
     private void moveLeft () {
         if (cursorCol == 0 && cursorRow == 0) {
         }
