@@ -35,14 +35,15 @@ public class Document {
     public void insertChar(char c) {
         if (c == 10) {
             lineFeed(c);
-            displayC(c);
-        }
-        else if (c == 8) {
-            removeChar(c);
-            displayC(' ');
-        } else {
+            display.displayCursor(c, cursorRow, cursorCol);
+        } else if (c == 8) {
+            moveLeft(c);
+            overWrite(' ');
+        } else if (c == 49) {
+            moveLeft(c);
+            display.displayCursor(c, cursorRow, cursorCol);
+        } else
             iChar(c);
-        }
     }
 
     private void iChar(char c) {
@@ -56,20 +57,17 @@ public class Document {
             case 2:
                 if (cursorCol >= CharacterDisplay.WIDTH) {
                     cursorCol = 0;
-                    displayC(c);
+                    overWrite(c);
                     cursorRow++;
                 }
             case 3:
                 CHLC.add(cursorCol, c);
-                displayC(c);
+                overWrite(c);
                 cursorCol++;
         }
     }
 
-
-
-
-        private void removeChar (char c){
+        private void moveLeft (char c){
         int r = 1;
         switch (r) {
                 case 1:
@@ -95,7 +93,6 @@ public class Document {
     private void lineFeed(char c) {
         CHLC.add(cursorCol, c);
         CHLR.add(cursorRow, c);
-        display.displayChar(c, cursorRow, cursorCol);
         if (cursorRow < CharacterDisplay.HEIGHT-1) {
             int ant = CharacterDisplay.WIDTH - cursorCol;
             for (int i = 0; i < ant; i++) {
@@ -105,7 +102,7 @@ public class Document {
             cursorRow++;
         }
     }
-        private void displayC (char c) {
+        private void overWrite (char c) {
             display.displayChar(c, cursorRow, cursorCol);
             display.displayCursor(c, cursorRow, cursorCol);
         }
