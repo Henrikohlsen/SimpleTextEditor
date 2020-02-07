@@ -35,7 +35,7 @@ public class Document {
     }
 
     public void insertChar(char c) {
-        int ic = 1;
+   int ic = 1;
         switch (ic) {
             case 1:
                 if (c == 8) {
@@ -54,6 +54,7 @@ public class Document {
                 }
             case 4:
                 iChar(c);
+
         }
     }
 
@@ -111,6 +112,22 @@ public class Document {
         display.displayCursor(c, cursorRow, cursorCol);
     }
 
+
+    public void lineFeed(char c) {
+        CHLC.add(cursorCol, c);
+        CHLR.add(cursorRow, c);
+        display.displayChar(c, cursorRow, cursorCol);
+        if (cursorRow < CharacterDisplay.HEIGHT-1) {
+            int ant = CharacterDisplay.WIDTH - cursorCol;
+            for (int i = 0; i < ant; i++) {
+                CHLC.add('c');
+            }
+            cursorCol = 0;
+            cursorRow++;
+        }
+        display.displayCursor(' ', cursorRow, cursorCol);
+    }
+  
     private void moveLeft() {
         int ml = 1;
         switch (ml) {
@@ -127,6 +144,7 @@ public class Document {
             case 3:
                 cursorCol--;
                 display.displayCursor(' ', cursorRow, cursorCol);
+
         }
     }
 
