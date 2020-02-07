@@ -38,21 +38,26 @@ public class Document {
    int ic = 1;
         switch (ic) {
             case 1:
-                if (c == 8) {
+                if (c == 8) { // Når man trykker "BackSpace" så fjerner den en bokstav
                     removeChar(c);
                     break;
                 }
             case 2:
-                if (c == 49) {
+                if (c == 10) { // Når man trykker "Enter" så hopper den ett hakk ned
+                    lineFeed(c);
+                    display.displayCursor(c, cursorRow, cursorCol);
+                }
+            case 3:
+                if (c == 49) { // Når man trykker på "1", så flytter man et hakk til venstre
                     moveLeft();
                     break;
                 }
-            case 3:
-                if (c == 50) {
+            case 4:
+                if (c == 50) { // Når man trykker på "2", så flytter man et hakk til høyre
                     moveRight();
                     break;
                 }
-            case 4:
+            case 5:
                 iChar(c);
 
         }
@@ -64,17 +69,17 @@ public class Document {
 
         switch (i) {
             case 1:
-                if (cursorCol == CharacterDisplay.WIDTH && cursorRow == CharacterDisplay.HEIGHT - 1) {
+                if (cursorCol == CharacterDisplay.WIDTH && cursorRow == CharacterDisplay.HEIGHT - 1) { // Hindrer at man kan legge til en bokstav helt på slutten av dokumentet
                     break;
                 }
             case 2:
-                if (cursorCol >= CharacterDisplay.WIDTH) {
+                if (cursorCol >= CharacterDisplay.WIDTH) { // Når man kommer til enden, så hopper den ned et hakk og begynner fra starten
                     cursorCol = 0;
                     cursorRow++;
                     displayC(c);
                 }
             case 3:
-                CHLC.add(cursorCol, c);
+                CHLC.add(cursorCol, c); // Legger til en bokstav
                 displayC(c);
                 cursorCol++;
         }
@@ -84,14 +89,14 @@ public class Document {
         int r = 1;
         switch (r) {
             case 1:
-                if (cursorCol == 0 && cursorRow == 0) {
+                if (cursorCol == 0 && cursorRow == 0) { // Hindrer at man kan slette en bokstav helt i starten av dokumentet
                     c = 0;
                     System.out.println("Nothing to remove");
                     displayC(c);
                     break;
                 }
             case 2:
-                if (cursorCol == 0) {
+                if (cursorCol == 0) { // Når man kommer på starten, så hopper den opp et hakk og begynner på enden
                     cursorRow--;
                     cursorCol = CharacterDisplay.WIDTH - 1;
                     c = 0;
@@ -99,7 +104,7 @@ public class Document {
                     break;
                 }
             case 3:
-                CHLC.removeLast();
+                CHLC.removeLast(); // Fjerner en bokstav
                 c = ' ';
                 cursorCol--;
                 displayC(c);
@@ -127,7 +132,7 @@ public class Document {
         }
         display.displayCursor(' ', cursorRow, cursorCol);
     }
-  
+
     private void moveLeft() {
         int ml = 1;
         switch (ml) {
