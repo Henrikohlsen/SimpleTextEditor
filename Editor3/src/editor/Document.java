@@ -105,7 +105,8 @@ public class Document {
         }
         else if (cursorCol == 0) {
             cursorRow--;
-            cursorCol = CharacterDisplay.WIDTH;
+            cursorCol = CharacterDisplay.WIDTH -1;
+            display.displayCursor(' ', cursorRow, cursorCol);
         } else {
             cursorCol--;
             display.displayCursor(' ', cursorRow, cursorCol);
@@ -115,7 +116,7 @@ public class Document {
     private void moveRight () {
         if (cursorCol == CharacterDisplay.WIDTH -1 && cursorRow == CharacterDisplay.HEIGHT -1) {
         }
-        else if(cursorCol == CharacterDisplay.WIDTH) {
+        else if(cursorCol == CharacterDisplay.WIDTH -1) {
             System.out.println(":(");
             cursorRow++;
             cursorCol = 0;
